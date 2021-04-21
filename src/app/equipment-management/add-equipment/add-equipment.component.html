@@ -1,0 +1,15 @@
+<Navbar [leftContent]="'返回'" (onLeftClick)="onLeftClick()"> 添加设备</Navbar>
+<div class="am-list-header">添加设备</div>
+<div class="am-list-body">
+    <InputItem [type]="'text'" [clear]="true" [placeholder]="'设备名称'" [moneyKeyboardAlign]="'left'" [content]="'设备名称'">
+    </InputItem>
+    <InputItem [type]="'textarea'" [clear]="true" [placeholder]="'设备描述'" [moneyKeyboardAlign]="'left'" [content]="'设备描述 '">
+    </InputItem>
+    <WingBlank>
+        <ng-template [ngTemplateOutlet]="placeHolderTmp"></ng-template>
+    </WingBlank>
+    <ng-template #placeHolderTmp>
+        <div Button [type]="'primary'">保存</div>
+    </ng-template>
+
+</div>

@@ -1,0 +1,18 @@
+<NoticeBar *ngIf="!isMobile" style="margin-bottom: 10px" [option]="{ content: '该组件只支持Touch事件，请使用移动模式/设备打开此页。', marqueeProps: { fps: 100 } }"></NoticeBar>
+<PullToRefresh [ngStyle]="dtPullToRefreshStyle" [direction]="state.direction" [(ngModel)]="state.refreshState" [endReachedRefresh]="state.endReachedRefresh" (onRefresh)="pullToRefresh($event)">
+    <ng-container *ngFor="let i of this.state.data" style="text-align: center; padding: 20px">
+        <ListItem [extra]="listRightTemplate" [arrow]="'horizontal'" multipleLine (onClick)='onClickItem(i)'>
+            {{i}}
+            <Brief>2020.4.21</Brief>
+        </ListItem>
+
+
+    </ng-container>
+    <ng-template #listRightTemplate>
+        <div>正常</div>
+    </ng-template>
+</PullToRefresh>
+
+<ng-template #loading>
+    <Icon type="loading"></Icon>
+</ng-template>

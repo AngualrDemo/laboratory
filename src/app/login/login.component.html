@@ -1,0 +1,17 @@
+<div style="padding: 15px 0 15px 0">
+    <div class="am-list-header">用户登录</div>
+    <div class="am-list-body">
+        <NoticeBar [option]="errorMsg" *ngIf='isShowNoticeBar'></NoticeBar>
+        <InputItem [type]="'text'" [clear]="true" [placeholder]="'用户名'" [moneyKeyboardAlign]="'left'" [content]="'用户名'" [(ngModel)]='userName'>
+        </InputItem>
+        <InputItem [type]="'password'" [clear]="true" [placeholder]="'密码'" [moneyKeyboardAlign]="'left'" [content]="'密码'" [(ngModel)]='password'>
+        </InputItem>
+        <WingBlank>
+            <ng-template [ngTemplateOutlet]="placeHolderTmp"></ng-template>
+        </WingBlank>
+        <ng-template #placeHolderTmp>
+            <div Button [type]="'primary'" (click)='onLogin()'>登录</div>
+        </ng-template>
+
+    </div>
+</div>

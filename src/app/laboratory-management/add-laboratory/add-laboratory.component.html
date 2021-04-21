@@ -1,0 +1,15 @@
+<Navbar [leftContent]="'返回'" (onLeftClick)="onLeftClick()"> 添加实验室</Navbar>
+<div class="am-list-header">新增实验室</div>
+<div class="am-list-body">
+    <InputItem [type]="'text'" [clear]="true" [placeholder]="'实验室名称'" [moneyKeyboardAlign]="'left'" [content]="'实验室名称'" [(ngModel)]='labName'>
+    </InputItem>
+    <InputItem [type]="'textarea'" [clear]="true" [placeholder]="'实验室介绍'" [moneyKeyboardAlign]="'left'" [content]="'实验室介绍'" [(ngModel)]='labIntroduce'>
+    </InputItem>
+    <WingBlank>
+        <ng-template [ngTemplateOutlet]="placeHolderTmp"></ng-template>
+    </WingBlank>
+    <ng-template #placeHolderTmp>
+        <div Button [type]="'primary'" (click)='addLaboratory()'>保存</div>
+    </ng-template>
+
+</div>

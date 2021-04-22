@@ -2,7 +2,7 @@
     <Icon [type]="'left'"></Icon>
 </ng-template>
 <TabBar [hidden]="hidden" [barTintColor]="'white'" [tintColor]="tintColor" [ngStyle]="tabbarStyle" [activeTab]="selectedIndex" [unselectedTintColor]="unselectedTintColor" [tabBarPosition]="topFlag ? 'top' : 'bottom'" (onPress)="tabBarTabOnPress($event)">
-    <TabBarItem [title]="'实验室'" [icon]="icon1" [selectedIcon]="icon11">
+    <TabBarItem [title]="userType == 'admin' ? '实验室' : '实验室预约'" [icon]="icon1" [selectedIcon]="icon11">
         <ng-template #icon1>
             <div style="width:22px;height: 22px;background: url('https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg') center center / 21px 21px no-repeat;"></div>
         </ng-template>
@@ -11,16 +11,16 @@
         </ng-template>
         <div style="background-color: white; height: 100%; text-align: center">
             <ng-container>
-                <Navbar [rightContent]="rightContent"> 实验室</Navbar>
+                <Navbar [rightContent]="rightContent"> {{userType == 'admin' ? '实验室' : '实验室预约'}}</Navbar>
 
                 <ng-template #rightContent>
-                    <div (click)='addLaboratory()'>添加</div>
+                    <div (click)='addLaboratory()' *ngIf='userType ==  "admin" '>添加</div>
                 </ng-template>
                 <ng-template [ngTemplateOutlet]="laboratoryList"></ng-template>
             </ng-container>
         </div>
     </TabBarItem>
-    <TabBarItem [title]="'设备管理'" [icon]="icon2" [selectedIcon]="icon22">
+    <TabBarItem [title]="'设备管理'" [icon]="icon2" [selectedIcon]="icon22" *ngIf='userType == "admin"'>
         <ng-template #icon2>
             <div style="width:22px;height: 22px;background: url('https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg') center center / 21px 21px no-repeat;"></div>
         </ng-template>
@@ -37,7 +37,7 @@
             </ng-container>
         </div>
     </TabBarItem>
-    <TabBarItem [title]="'报修管理'" [icon]="icon3" [selectedIcon]="icon33">
+    <TabBarItem [title]="'报修管理'" [icon]="icon3" [selectedIcon]="icon33" *ngIf='userType == "admin"'>
         <ng-template #icon3>
             <div style="width:22px;height: 22px;background: url('https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg') center center / 21px 21px no-repeat;"></div>
         </ng-template>
@@ -51,7 +51,7 @@
             </ng-container>
         </div>
     </TabBarItem>
-    <TabBarItem [title]="'预约管理'" [icon]="icon4" [selectedIcon]="icon44">
+    <TabBarItem [title]="'预约管理'" [icon]="icon4" [selectedIcon]="icon44" *ngIf='userType == "admin"'>
         <ng-template #icon4>
             <div style="width:22px;height: 22px;background: url('https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg') center center / 21px 21px no-repeat;"></div>
         </ng-template>

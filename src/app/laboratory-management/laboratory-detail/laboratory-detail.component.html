@@ -1,15 +1,41 @@
-<Navbar [leftContent]="'返回'" (onLeftClick)="onLeftClick()"> 实验室详情</Navbar>
-<div class="am-list-header">实验室详情</div>
-<div class="am-list-body">
-    <InputItem [type]="'text'" [clear]="true" [placeholder]="'实验室名称'" [moneyKeyboardAlign]="'left'" [content]="'实验室名称'">
-    </InputItem>
-    <InputItem [type]="'textarea'" [clear]="true" [placeholder]="'实验室介绍'" [moneyKeyboardAlign]="'left'" [content]="'实验室介绍'">
-    </InputItem>
-    <WingBlank>
-        <ng-template [ngTemplateOutlet]="placeHolderTmp"></ng-template>
-    </WingBlank>
-    <ng-template #placeHolderTmp>
-        <div Button [type]="'primary'">保存</div>
-    </ng-template>
-
-</div>
+<Navbar [leftContent]="'返回'" [rightContent]="rightContent" (onLeftClick)="onLeftClick()"> 实验室详情</Navbar>
+<ng-template #rightContent>
+    <div (click)='editLaboratory()'>{{pageType == 'edit'? '取消' : '编辑'}}</div>
+</ng-template>
+<ng-container *ngIf='pageType=="edit"'>
+    <div class="am-list-header">编辑实验室</div>
+    <div class="am-list-body">
+        <InputItem [type]="'text'" [clear]="true" [placeholder]="'实验室名称'" [moneyKeyboardAlign]="'left'" [content]="'实验室名称'" [(ngModel)]='labName'>
+        </InputItem>
+        <InputItem [type]="'text'" [clear]="true" [placeholder]="'实验室介绍'" [moneyKeyboardAlign]="'left'" [content]="'实验室介绍'" [(ngModel)]='labIntroduce'>
+        </InputItem>
+        <WingBlank>
+            <ng-template [ngTemplateOutlet]="placeHolderTmp"></ng-template>
+        </WingBlank>
+        <ng-template #placeHolderTmp>
+            <div Button [type]="'primary'" (click)='saveLaboratory()'>保存</div>
+        </ng-template>
+    </div>
+</ng-container>
+<ng-container *ngIf='pageType=="detail"'>
+    <List [className]="'my-list'" [renderHeader]="renderHeader">
+        <ListItem [extra]="laboratoryData?.labName">实验室名称</ListItem>
+        <ListItem [extra]="laboratoryData?.labIntroduce">实验室描述</ListItem>
+    </List>
+    <List [className]="'my-list'" [renderHeader]="'实验室设备'">
+        <ListItem [extra]="laboratoryData?.labName">实验室名称</ListItem>
+        <ListItem [extra]="laboratoryData?.labIntroduce">实验室描述</ListItem>
+    </List>
+    <List [className]="'my-list'" [renderHeader]="'实验室预约'">
+        <ListItem [extra]="laboratoryData?.labName">实验室名称</ListItem>
+        <ListItem [extra]="laboratoryData?.labIntroduce">实验室描述</ListItem>
+    </List>
+    <ListItem>
+        <a Button [type]="'primary'" [size]="'small'" [inline]="true">
+          Submit
+        </a>
+        <a Button style="margin-left: 2.5px;" [size]="'small'" [inline]="true">
+          Reset
+        </a>
+    </ListItem>
+</ng-container>

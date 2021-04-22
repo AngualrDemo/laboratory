@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit {
         if(dataN.code == '0') {
           me.router.navigateByUrl('/home')
           me.isShowNoticeBar = false;
+          window.sessionStorage.setItem('token', dataN.msg);
+          window.sessionStorage.setItem('userType', dataN.data);
         }else {
           me.isShowNoticeBar = true;
           me.errorMsg.content = dataN.msg;

@@ -8,6 +8,7 @@ import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 import { CommonModule } from '@angular/common';
 import { LaboratoryDetailComponent } from './laboratory-detail/laboratory-detail.component';
 import { FormsModule } from '@angular/forms';
+import { AppointmentLaboratoryComponent } from './appointment-laboratory/appointment-laboratory.component';
 
 const routes: Routes = [
   {
@@ -17,13 +18,17 @@ const routes: Routes = [
   {
     path: 'laboratory-detail',
     component: LaboratoryDetailComponent
-  }
+  },
+  {
+    path: 'appointment-laboratory',
+    component: AppointmentLaboratoryComponent
+  },
 ]
 
 @NgModule({
   // declarations: [LaboratoryListComponent],
   imports: [RouterModule.forChild(routes), NgZorroAntdMobileModule, CommonModule, FormsModule],
   exports: [RouterModule],
-  declarations: [AddLaboratoryComponent, LaboratoryDetailComponent]
+  declarations: [AddLaboratoryComponent, LaboratoryDetailComponent, AppointmentLaboratoryComponent]
 })
 export class LaboratoryManagementModule { }

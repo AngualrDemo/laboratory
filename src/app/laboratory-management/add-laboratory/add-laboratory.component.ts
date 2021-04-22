@@ -17,12 +17,18 @@ export class AddLaboratoryComponent implements OnInit {
     this.router.navigateByUrl('/home')
   }
   addLaboratory() {
+    const me = this;
     let params: AddLaboratory = {
       labIntroduce: this.labIntroduce,
       labName: this.labName
     }
     this.api.addLaboratory(params).subscribe(data=>{
+      let dataN:any = data;
+      if(dataN.code == '0') {
+       me.onLeftClick()
+      }
       console.log(data)
     })
   }
+  
 }

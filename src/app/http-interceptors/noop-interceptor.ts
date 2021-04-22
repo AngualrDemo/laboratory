@@ -10,9 +10,30 @@ export class CommonInterceptor implements HttpInterceptor {
     let apiPath = environment.apiPath
     // 先补全请求协议
     let url =  apiPath +  req.url;
-    req = req.clone({
+    // let reqNew = req.clone({
+    //     url,
+    //     headers: req.headers.set('token', 'asdqwe')
+    //     // withCredentials: true,
+    //     // Authorization: window.sessionStorage.getItem('token') as string
+    // });
+
+    const needToken = ignoreToken.filter(u => url.match(u));
+    // if (url.indexOf('http://') < 0 || url.indexOf('https://') < 0) {
+    //   url = 'http://' + url;
+    // }
+    // 过滤掉不需要token的请求
+    if (!needToken.length) {
+      req = req.clone({
+        url,
+        // withCredentials: true,
+        headers: req.headers.set('Authorization', window.sessionStorage.getItem('token') as string)
+      });
+    } else {
+      req = req.clone({
         url
-    });
+      });
+    }
+    // reqNew.headers = reqNew.headers.set('Authorization',window.sessionStorage.getItem('token') as string)
     return next.handle(req).pipe(
       tap(
         event => {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActionSheetService } from 'ng-zorro-antd-mobile';
 import { ApiServiceService } from 'src/app/api-service.service';
 
 @Component({
@@ -11,8 +12,8 @@ export class LaboratoryListComponent implements OnInit {
   isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(window.navigator.userAgent);
   pageLimit = 20;
   public directionCount = 0;
-  page = 0;
-  state = {
+  page = 1;
+  state: any = {
     refreshState: {
       currentState: 'deactivate',
       drag: false
@@ -20,13 +21,13 @@ export class LaboratoryListComponent implements OnInit {
     direction: '',
     endReachedRefresh: false,
     height: 500,
-    data: [1],
+    data: [],
     directionName: 'both up and down'
   };
- 
+  userType : 'admin' | 'user' = 'user'; 
   dtPullToRefreshStyle = { height: this.state.height + 'px' };
 
-  constructor(private router: Router, private api: ApiServiceService) {}
+  constructor(private router: Router, private api: ApiServiceService, private _actionSheet: ActionSheetService) {}
 
   onClick() {
     this.directionCount++;
@@ -52,15 +53,59 @@ export class LaboratoryListComponent implements OnInit {
     }
   }
   onClickItem(data: any) {
-    console.log(data);
-    this.router.navigateByUrl('/laboratory-home/laboratory-detail')
+    const me = this;
+    me.router.navigate(['/laboratory-home/laboratory-detail', data])
   }
-  
+  actionSheet(itemData:any):void {
+      if(this.userType == 'admin'){
+        this.AdminShowActionSheet(itemData)
+      }else {
+        this.userShowActionSheet(itemData)
+      }
+  }
+  AdminShowActionSheet = (itemData: any) => {
+    const BUTTONS = [' 设 备 ', ' 详 情 ', ' 删  除', ' 取 消 '];
+    const me = this;
+    const FUNC = ['goEquipment','onClickItem', 'deleteItem']
+    this._actionSheet.showActionSheetWithOptions(
+      {
+        options: BUTTONS,
+        cancelButtonIndex: BUTTONS.length - 1,
+        destructiveButtonIndex: BUTTONS.length - 2,
+        title: itemData.labName,
+        maskClosable: true
+      },
+      buttonIndex => {
+        console.log(buttonIndex);
+        let funName = FUNC[buttonIndex] as 'goEquipment'|'onClickItem'|'deleteItem';
+        if(buttonIndex != BUTTONS.length-1 && buttonIndex != -1) me[funName](itemData)
+      }
+    );
+  }
+  userShowActionSheet = (itemData: any) => {
+    const BUTTONS = [' 预 约 ', ' 报 修 ', ' 取 消 '];
+    const FUNC = ['appointmentLaboratory','repairLaboratory'];
+    const me = this;
+    this._actionSheet.showActionSheetWithOptions(
+      {
+        options: BUTTONS,
+        cancelButtonIndex: BUTTONS.length - 1,
+        title: itemData.labName,
+        maskClosable: true
+      },
+      buttonIndex => {
+        let funName = FUNC[buttonIndex] as 'appointmentLaboratory'|'repairLaboratory';
+        if(buttonIndex != BUTTONS.length-1 && buttonIndex != -1) me[funName](itemData)
+        
+      }
+    );
+  }
   pullToRefresh(event: any) {
+    console.log(event)
     if (event === 'endReachedRefresh') {
       if (this.page < 9) {
         this.page++;
-        this.addItems(this.page * this.pageLimit);
+        // this.addItems(this.page * this.pageLimit);
         this.state.refreshState.currentState = 'release';
         setTimeout(() => {
           this.state.refreshState.currentState = 'finish';
@@ -69,38 +114,61 @@ export class LaboratoryListComponent implements OnInit {
     } else {
       if (event === 'down') {
         this.state.data = [];
-        this.page = 0;
-        this.addItems(0);
+        this.page = 1;
+        this.getDataList();
       } else {
-        if (this.page < 9) {
-          this.page++;
-          this.addItems(this.page * this.pageLimit);
-        }
+        this.page++;
+        this.getDataList();
       }
     }
   }
-
-  addItems(startIndex:number) {
-    for (let i = startIndex; i < this.pageLimit * (this.page + 1); i++) {
-      this.state.data.push(i);
-    }
+  goEquipment(itemData:any){
+    console.log(itemData, 'goEquipment')
   }
+  deleteItem(itemDate:any) {
+    console.log(itemDate, 'deleteItem')
+    const me = this;
+    this.api.deleteLaboratory(itemDate.id).subscribe(data=>{
+      let dataN: any = data;
+      if(dataN.code==0) {
+        this.state.data = [];
+        me.getDataList();
+      }
+    })
+  }
+   /**
+   *预约
+   *
+   * @memberof HomeComponent
+   */
+   appointmentLaboratory(itemData:any) {
+    this.router.navigate(['/laboratory-home/appointment-laboratory', itemData])
+  }
+  repairLaboratory(itemData:any) {
+    console.log('d')
+  }
+  // addItems(startIndex:number) {
+  //   for (let i = startIndex; i < this.pageLimit * (this.page + 1); i++) {
+  //     this.state.data.push(i);
+  //   }
+  // }
   getDataList() {
     const me = this;
     let params = {"page":{
-          pages: 0,
-          current: 1,
-          size: 2
+          current: me.page,
+          size: me.pageLimit
       },
-        "t":{}
-        
+        "t":{} 
     }
     me.api.getLaboratoryList(params).subscribe(data=>{
-      console.log(data)
+      let dataN: any = data;
+      if(dataN.code == '0' && dataN.data && Array.isArray(dataN.data.records)) {
+        this.state.data = [...this.state.data, ...dataN.data.records]
+      }
     })
   }
   ngOnInit() {
-    this.addItems(0);
+    this.userType = this.api.getUserType();
     this.getDataList();
   }
   

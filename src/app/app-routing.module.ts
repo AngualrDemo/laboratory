@@ -33,6 +33,13 @@ const routes: Routes = [
     loadChildren: ()=>import('./equipment-management/equipment-management.module').then((mod)=>mod.EquipmentManagementModule)
   },
   {
+    path: 'news-home',
+    data: {
+      name: '设备管理'
+    },
+    loadChildren: ()=>import('./news/news.module').then((mod)=>mod.NewsModule)
+  },
+  {
     path: 'home',
     component: HomeComponent
   },

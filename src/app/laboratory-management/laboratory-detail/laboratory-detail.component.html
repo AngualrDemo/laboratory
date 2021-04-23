@@ -27,15 +27,11 @@
         <ListItem [extra]="laboratoryData?.labIntroduce">实验室描述</ListItem>
     </List>
     <List [className]="'my-list'" [renderHeader]="'实验室预约'">
-        <ListItem [extra]="laboratoryData?.labName">实验室名称</ListItem>
-        <ListItem [extra]="laboratoryData?.labIntroduce">实验室描述</ListItem>
+        <ng-container *ngIf='appointmentList.length > 0'>
+            <ListItem *ngFor='let item of appointmentList' [extra]="item?.day" [align]="'top'" multipleLine>
+                {{item?.userName}}
+                <Brief>{{item?.amorpm == '1' ? '下午' : '上午'}}</Brief>
+            </ListItem>
+        </ng-container>
     </List>
-    <ListItem>
-        <a Button [type]="'primary'" [size]="'small'" [inline]="true">
-          Submit
-        </a>
-        <a Button style="margin-left: 2.5px;" [size]="'small'" [inline]="true">
-          Reset
-        </a>
-    </ListItem>
 </ng-container>

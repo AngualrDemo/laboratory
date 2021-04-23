@@ -1,11 +1,34 @@
 <Navbar [leftContent]="'返回'" (onLeftClick)="onLeftClick()"> 预约实验室</Navbar>
-<div class="am-list-header">预约实验室</div>
 
 <div class="am-list-body">
+    <div class="am-list-header">实验室状态</div>
+    <!-- <Grid [data]="data" [isCarousel]="true" (onClick)="click($event)"></Grid> -->
+
+    <Grid>
+        <Flex *ngFor="let item of initData; let i = index" [justify]="'center'" [align]="'stretch'">
+            <FlexItem *ngFor="let subItem of item; let j = index">
+                <div *ngIf="subItem !== null" class="am-grid-item-content" (click)="click(subItem, i * columnNum + j)">
+                    <div class="am-grid-item-inner-content column-num-{{ columnNum }}">
+                        <img src="{{ subItem.icon }}" class="am-grid-icon" />
+                        <div class="am-grid-text">{{ subItem.status == '0' ? '可预约' : '已预约' }}</div>
+                        <div class="am-grid-text" style="font-size: 14px;color: #888;">{{ subItem.text }}:{{ subItem.amorpm == '0' ? '上午' : '下午' }}</div>
+                    </div>
+                </div>
+                <div *ngIf="subItem === null" class="am-grid-null-item"></div>
+            </FlexItem>
+        </Flex>
+    </Grid>
+</div>
+<div class="am-list-header">预约实验室</div>
+<div class="am-list-body">
     <List [className]="'date-picker-list'">
-        <ListItem DatePicker [extra]="currentDateFormat(day, 'yyyy-mm-dd')" [arrow]="'horizontal'" [mode]="'date'" [(ngModel)]="day" (onOk)="onOk($event)">
+        <!-- <ListItem DatePicker [extra]="currentDateFormat(day, 'yyyy-mm-dd')" [arrow]="'horizontal'" [mode]="'date'" [(ngModel)]="day" (onOk)="onOk($event)">
             预约时间
             <Brief>{{ name }}</Brief>
+        </ListItem> -->
+        <ListItem [extra]="day" [arrow]="'horizontal'" multipleLine>
+            预约时间
+            <Brief> {{day}}</Brief>
         </ListItem>
         <RadioItemGroup [(ngModel)]="amorpm">
             <RadioItem *ngFor="let i of amorpmData" [name]="i.name" [value]="i.value">
@@ -13,12 +36,6 @@
             </RadioItem>
         </RadioItemGroup>
     </List>
-    <!-- <InputItem [type]="'text'" [clear]="true" [placeholder]="'预约时间'" [moneyKeyboardAlign]="'left'" [content]="'预约时间'" [(ngModel)]='day'>
-    </InputItem> -->
-
-    <!-- <InputItem [type]="'text'" [clear]="true" [placeholder]="'午别'" [moneyKeyboardAlign]="'left'" [content]="'午别'" [(ngModel)]='amorpm'>
-    </InputItem>
-    -->
     <WingBlank>
         <ng-template [ngTemplateOutlet]="placeHolderTmp"></ng-template>
     </WingBlank>

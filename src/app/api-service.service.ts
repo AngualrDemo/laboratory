@@ -42,6 +42,9 @@ export class ApiServiceService {
   addLaboratory(params: AddLaboratory) {
     return this.http.post('/api/laboratoryIntroduce/insert', params)
   }
+  addEquipment(params: any) {
+    return this.http.post('/api/equipmentIntroduce/insert', params)
+  }
   /**
    *修改实验室
    *
@@ -71,5 +74,37 @@ export class ApiServiceService {
    */
   getLaboratoryList(params: any){
     return this.http.post('/api/laboratoryIntroduce/queryPage', params)
+  }
+  /**
+   * 根据实验室ID获取实验室预约列表
+   */
+   getLaboratoryAppointmentList(laboratoryId: any) {
+    return this.http.get(`/api/appointment/queryByLabNmae?id=${laboratoryId}` )
+  }
+  /**
+     * 根据实验室ID获取实验室预约列表
+     */
+   queryStarteByLabNmae(laboratoryId: any) {
+    return this.http.get(`/api/appointment/queryStarteByLabNmae?id=${laboratoryId}` )
+  }
+
+
+  /**
+   *实验室报修
+   *
+   * @param {*} params
+   * @returns
+   * @memberof ApiServiceService
+   */
+  addRepairLaboratory(params: any) {
+    return this.http.post('/api/laboratoryRepair/insert', params)
+  }
+
+
+  getNewsList(params: any) {
+    return this.http.post('/api/news/selectPage', params)
+  }
+  addNews(params: any) {
+    return this.http.post('/api/news/insert', params)
   }
 }

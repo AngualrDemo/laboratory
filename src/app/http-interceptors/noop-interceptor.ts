@@ -48,6 +48,7 @@ export class CommonInterceptor implements HttpInterceptor {
         },
         error => {
           // token过期 服务器错误等处理
+          console.log(error)
         })
     );
   }

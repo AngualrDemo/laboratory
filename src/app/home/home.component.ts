@@ -36,6 +36,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     console.log('xxxx')
     this.router.navigateByUrl('/laboratory-home/add-laboratory')
   }
+  addNews() {
+    this.router.navigateByUrl('/news-home/add-news')
+  }
   /**
    *添加设配
    *

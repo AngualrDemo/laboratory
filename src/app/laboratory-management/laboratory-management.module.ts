@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { LaboratoryDetailComponent } from './laboratory-detail/laboratory-detail.component';
 import { FormsModule } from '@angular/forms';
 import { AppointmentLaboratoryComponent } from './appointment-laboratory/appointment-laboratory.component';
+import { AddLaboratoryRepairComponent } from './add-laboratory-repair/add-laboratory-repair.component';
 
 const routes: Routes = [
   {
@@ -23,12 +24,16 @@ const routes: Routes = [
     path: 'appointment-laboratory',
     component: AppointmentLaboratoryComponent
   },
+  {
+    path: 'repair-laboratory',
+    component: AddLaboratoryRepairComponent
+  }
 ]
 
 @NgModule({
   // declarations: [LaboratoryListComponent],
   imports: [RouterModule.forChild(routes), NgZorroAntdMobileModule, CommonModule, FormsModule],
   exports: [RouterModule],
-  declarations: [AddLaboratoryComponent, LaboratoryDetailComponent, AppointmentLaboratoryComponent]
+  declarations: [AddLaboratoryComponent, LaboratoryDetailComponent, AppointmentLaboratoryComponent, AddLaboratoryRepairComponent]
 })
 export class LaboratoryManagementModule { }

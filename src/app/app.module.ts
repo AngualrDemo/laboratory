@@ -16,13 +16,14 @@ import { AppointmentListComponent } from './appointment-management/appointment-l
 import { EquipmentListComponent } from './equipment-management/equipment-list/equipment-list.component';// 设备列表
 import { RepairListComponent } from './repair-management/repair-list/repair-list.component';//  
 import { httpInterceptorProviders } from './http-interceptors';
+import { NewsListComponent } from './news/news-list/news-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    LaboratoryListComponent, AppointmentListComponent,EquipmentListComponent, RepairListComponent
+    LaboratoryListComponent, AppointmentListComponent,EquipmentListComponent, RepairListComponent, NewsListComponent
   ],
   imports: [
     BrowserModule,

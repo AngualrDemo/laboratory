@@ -37,7 +37,7 @@
             </ng-container>
         </div>
     </TabBarItem>
-    <TabBarItem [title]="'报修管理'" [icon]="icon3" [selectedIcon]="icon33" *ngIf='userType == "admin"'>
+    <TabBarItem [title]="'新闻'" [icon]="icon3" [selectedIcon]="icon33" *ngIf='userType == "admin"'>
         <ng-template #icon3>
             <div style="width:22px;height: 22px;background: url('https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg') center center / 21px 21px no-repeat;"></div>
         </ng-template>
@@ -46,12 +46,15 @@
         </ng-template>
         <div style="background-color: white; height: 100%; text-align: center">
             <ng-container>
-                <Navbar>报修管理</Navbar>
-                <ng-template [ngTemplateOutlet]="repairList"></ng-template>
+                <Navbar [rightContent]="rightContentNews">新闻</Navbar>
+                <ng-template [ngTemplateOutlet]="newsList"></ng-template>
+                <ng-template #rightContentNews>
+                    <div (click)='addNews()' *ngIf='userType ==  "admin" '>添加</div>
+                </ng-template>
             </ng-container>
         </div>
     </TabBarItem>
-    <TabBarItem [title]="'预约管理'" [icon]="icon4" [selectedIcon]="icon44" *ngIf='userType == "admin"'>
+    <TabBarItem [title]="'我的'" [icon]="icon4" [selectedIcon]="icon44" *ngIf='userType == "admin"'>
         <ng-template #icon4>
             <div style="width:22px;height: 22px;background: url('https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg') center center / 21px 21px no-repeat;"></div>
         </ng-template>
@@ -72,8 +75,8 @@
 <ng-template #equipmentList>
     <app-equipment-list></app-equipment-list>
 </ng-template>
-<ng-template #repairList>
-    <app-repair-list></app-repair-list>
+<ng-template #newsList>
+    <app-news-list></app-news-list>
 </ng-template>
 <ng-template #appointmentList>
     <app-appointment-list></app-appointment-list>

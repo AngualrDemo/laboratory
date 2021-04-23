@@ -64,7 +64,7 @@ export class LaboratoryListComponent implements OnInit {
       }
   }
   AdminShowActionSheet = (itemData: any) => {
-    const BUTTONS = [' 设 备 ', ' 详 情 ', ' 删  除', ' 取 消 '];
+    const BUTTONS = ['添加设备', ' 详 情 ', ' 删  除', ' 取 消 '];
     const me = this;
     const FUNC = ['goEquipment','onClickItem', 'deleteItem']
     this._actionSheet.showActionSheetWithOptions(
@@ -123,7 +123,7 @@ export class LaboratoryListComponent implements OnInit {
     }
   }
   goEquipment(itemData:any){
-    console.log(itemData, 'goEquipment')
+    this.router.navigate(['/equipment-home/add-equipment', itemData])
   }
   deleteItem(itemDate:any) {
     console.log(itemDate, 'deleteItem')
@@ -145,7 +145,7 @@ export class LaboratoryListComponent implements OnInit {
     this.router.navigate(['/laboratory-home/appointment-laboratory', itemData])
   }
   repairLaboratory(itemData:any) {
-    console.log('d')
+    this.router.navigate(['/laboratory-home/repair-laboratory', itemData])
   }
   // addItems(startIndex:number) {
   //   for (let i = startIndex; i < this.pageLimit * (this.page + 1); i++) {

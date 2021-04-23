@@ -13,13 +13,16 @@ export class LaboratoryDetailComponent implements OnInit {
   laboratoryData: any = null;
   pageType: 'edit' | 'detail' = 'detail'
   labIntroduce = '';
+  appointmentList: Array<any> = [];
   labName = '';
   ngOnInit(): void {
     if(this.routerInfo.snapshot.params){
       this.laboratoryData = this.routerInfo.snapshot.params;
       this.labIntroduce  = this.laboratoryData.labIntroduce
       this.labName  = this.laboratoryData.labName
+      this.getLaboratoryAppointmentList();
     }
+    
   }
   onLeftClick(): void {
     this.router.navigateByUrl('/home');
@@ -45,5 +48,17 @@ export class LaboratoryDetailComponent implements OnInit {
   }
   renderHeader() {
     return '实验室详情'
+  }
+  getLaboratoryAppointmentList() {
+    const me = this;
+    me.api.queryStarteByLabNmae(this.laboratoryData.id).subscribe(data=>{
+      let dataN: any = data;
+      console.log(data)
+      if(dataN.code == '0' && Array.isArray(dataN.data)) {
+        me.appointmentList = dataN.data;
+      }else {
+        me.appointmentList = [];
+      }
+    })
   }
 }

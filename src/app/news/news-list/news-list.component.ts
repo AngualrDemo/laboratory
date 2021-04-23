@@ -65,9 +65,9 @@ export class NewsListComponent implements OnInit {
       }
   }
   AdminShowActionSheet = (itemData: any) => {
-    const BUTTONS = ['添加设备', ' 详 情 ', ' 删  除', ' 取 消 '];
+    const BUTTONS = [' 编 辑 ', ' 删  除', ' 取 消 '];
     const me = this;
-    const FUNC = ['goEquipment','onClickItem', 'deleteItem']
+    const FUNC = ['editNews', 'deleteNews']
     this._actionSheet.showActionSheetWithOptions(
       {
         options: BUTTONS,
@@ -78,10 +78,29 @@ export class NewsListComponent implements OnInit {
       },
       buttonIndex => {
         console.log(buttonIndex);
-        let funName = FUNC[buttonIndex] as 'goEquipment'|'onClickItem'|'deleteItem';
+        let funName = FUNC[buttonIndex] as 'editNews'|'deleteNews';
         if(buttonIndex != BUTTONS.length-1 && buttonIndex != -1) me[funName](itemData)
       }
     );
+  }
+  editNews(itemData: any) {
+    const me =this;
+    this.router.navigate(['/news-home/add-news',itemData]);
+  }
+  detailNews(itemData: any) {
+    const me =this;
+    this.router.navigate(['/news-home/add-news',itemData]);
+  }
+  deleteNews(itemDate:any) {
+    console.log(itemDate, 'deleteItem')
+    const me = this;
+    this.api.deleteNews(itemDate.id).subscribe(data=>{
+      let dataN: any = data;
+      if(dataN.code==0) {
+        this.state.data = [];
+        me.getDataList();
+      }
+    })
   }
   userShowActionSheet = (itemData: any) => {
     const BUTTONS = [' 预 约 ', ' 报 修 ', ' 取 消 '];
@@ -126,17 +145,7 @@ export class NewsListComponent implements OnInit {
   goEquipment(itemData:any){
     this.router.navigate(['/equipment-home/add-equipment', itemData])
   }
-  deleteItem(itemDate:any) {
-    console.log(itemDate, 'deleteItem')
-    const me = this;
-    this.api.deleteLaboratory(itemDate.id).subscribe(data=>{
-      let dataN: any = data;
-      if(dataN.code==0) {
-        this.state.data = [];
-        me.getDataList();
-      }
-    })
-  }
+  
    /**
    *预约
    *

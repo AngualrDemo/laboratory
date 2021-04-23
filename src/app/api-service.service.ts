@@ -101,10 +101,28 @@ export class ApiServiceService {
   }
 
 
+  getEquipmentList(params: any) {
+    return this.http.post('/api/equipmentIntroduce/selectPage', params)
+  }
+
+  deleteEquipment(id: number) {
+    return this.http.get(`/api/equipmentIntroduce/delete?ids=${id}`)
+  }
+
   getNewsList(params: any) {
     return this.http.post('/api/news/selectPage', params)
   }
   addNews(params: any) {
     return this.http.post('/api/news/insert', params)
+  }
+  updateNews(params: any) {
+    return this.http.post('/api/news/update', params)
+  }
+  updateEquipment(params: any) {
+    return this.http.post('/api/equipmentIntroduce/update', params)
+  }
+
+  deleteNews(id:any) {
+    return this.http.get(`/api/news/delete?ids=${id}`)
   }
 }

@@ -17,6 +17,9 @@ export class AddEquipmentComponent implements OnInit {
   ngOnInit(): void {
     if(this.routerInfo.snapshot.params){
       this.laboratoryData = this.routerInfo.snapshot.params;
+      this.equName = this.laboratoryData.equName;
+      this.equIntroduction = this.laboratoryData.equIntroduction;
+      this.queType = this.laboratoryData.queType;
     }
   }
   onLeftClick(): void {
@@ -30,12 +33,25 @@ export class AddEquipmentComponent implements OnInit {
       id: '',
       queType: this.queType
     }
-    this.api.addEquipment(params).subscribe(data=>{
-      let dataN:any = data;
-      if(dataN.code == '0') {
-       me.onLeftClick()
-      }
-      console.log(data)
-    })
+
+    if(me.laboratoryData) {
+      params['id'] = me.laboratoryData.id;
+      this.api.updateEquipment(params).subscribe(data=>{
+        let dataN:any = data;
+        if(dataN.code == '0') {
+         me.onLeftClick()
+        }
+        console.log(data)
+      })
+    }else {
+      this.api.addEquipment(params).subscribe(data=>{
+        let dataN:any = data;
+        if(dataN.code == '0') {
+         me.onLeftClick()
+        }
+        console.log(data)
+      })
+    }
+   
   }
 }

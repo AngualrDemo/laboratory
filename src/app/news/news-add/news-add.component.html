@@ -1,1 +1,17 @@
-<p>news-add works!</p>
+<Navbar [leftContent]="'返回'" (onLeftClick)="onLeftClick()"> {{newsData?'编辑新闻': '新增新闻'}}</Navbar>
+<div class="am-list-header">{{newsData?'编辑新闻': '新增新闻'}}</div>
+<div class="am-list-body">
+    <InputItem [type]="'text'" [clear]="true" [placeholder]="'标题'" [moneyKeyboardAlign]="'left'" [content]="'标题'" [(ngModel)]='title'>
+    </InputItem>
+    <InputItem [type]="'text'" [clear]="true" [placeholder]="'标签'" [moneyKeyboardAlign]="'left'" [content]="'标签 '" [(ngModel)]='label'>
+    </InputItem>
+    <InputItem [type]="'text'" [clear]="true" [placeholder]="'内容'" [moneyKeyboardAlign]="'left'" [content]="'内容 '" [(ngModel)]='content'>
+    </InputItem>
+    <WingBlank>
+        <ng-template [ngTemplateOutlet]="placeHolderTmp"></ng-template>
+    </WingBlank>
+    <ng-template #placeHolderTmp>
+        <div Button [type]="'primary'" (click)='addNews()'>保存</div>
+    </ng-template>
+
+</div>

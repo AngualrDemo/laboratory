@@ -3,11 +3,11 @@
     <ng-container *ngFor="let itemData of this.state.data" style="text-align: center; padding: 20px">
         <!-- <div Button (onClick)="showActionSheet(message)">showActionSheet</div> -->
         <ListItem [extra]="listRightTemplate" [arrow]="'horizontal'" multipleLine (onClick)='actionSheet(itemData)'>
-            {{itemData.labName}}
-            <Brief>{{itemData.labIntroduce}}</Brief>
+            {{itemData.title}}
+            <Brief>{{itemData.label}}</Brief>
         </ListItem>
         <ng-template #listRightTemplate>
-            <div>{{itemData.labState == '0' ? '正常' : '报修'}}</div>
+            <div>{{itemData.author}}</div>
         </ng-template>
     </ng-container>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiServiceService } from '../api-service.service';
 
 
@@ -22,10 +22,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
   userType : 'admin' | 'user' = 'user'; 
   selectedIndex: number = 0;
-
-  constructor(private router: Router, private api: ApiServiceService) { }
+  params: any = null;
+  constructor(private router: Router, private api: ApiServiceService, private routeInfo: ActivatedRoute) { }
   ngAfterViewInit(): void {
-      console.log(document.body.offsetHeight)
+      if(this.routeInfo.snapshot.params){
+        this.params = this.routeInfo.snapshot.params;
+        if(this.params){
+          let index = this.params.tabIndex;
+          if(index>0 && index < 3) this.selectedIndex = index
+        }
+      }
   }
   /**
    *添加实验室
